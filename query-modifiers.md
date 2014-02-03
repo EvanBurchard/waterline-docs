@@ -63,6 +63,25 @@ User.find({where: {name: {'startsWith': 'ev'}}}, cb)
 // Find users where the name ends with 'an'  (this will match 'AN' 'vaaaan' 'EvAn' 'Van' etc.)
 User.find({where: {name: {'endsWith': 'an'}}}, cb) 
 ```
+If you don't specify a query modifier, by default a where will be used to query against your attribute condtions, so this:
+```
+User.find({name: {'<': 'evan'}}, cb)
+```
+will get the same results as:
+```
+User.find({where: {name: {'<': 'evan'}}}, cb)
+```
+
+
+### Combining Query Modifiers
+You can also combine where with other query modifiers, such as limit, skip and sort like this:
+```
+User.find({where: {name: {'endsWith': 'an'}}, limit:2}, cb) 
+```
+If you want multiple find conditions on the same attribute, you'll have to add an additional key value pair in the where object like this:
+```
+User.find({where: {name: {'endsWith': 'an'}, name: {'contains': 'e'}}}, cb) 
+```
 
 ### Or
 
